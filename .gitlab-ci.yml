@@ -1,7 +1,9 @@
 before_script:
-  - docker info
+  # - docker info
 
 build_image:
   script:
-    - docker build -t morgangalvin/devopsdemo .
-    - docker run -p 49160:5000  morgangalvin/devopsdemo
+    - npm test
+    - npm run
+    # - docker build -t morgangalvin/devopsdemo .
+    # - docker run -p 49160:5000  morgangalvin/devopsdemo
