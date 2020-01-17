@@ -3,17 +3,31 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "test": "mocha"
+    "build": "webpack --config webpack.config.js -d -w",
+    "server": "node -r esm ./bin/www",
+    "start": "npm-run-all --parallel build server",
+    "test": "jest"
   },
   "dependencies": {
     "debug": "~2.6.9",
+    "esm": "^3.2.25",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
   }
 }
