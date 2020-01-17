@@ -1,9 +1,21 @@
-before_script:
-  # - docker info
+image: node:latest
 
-build_image:
+stages:
+  - build
+  - test
+
+cache:
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: build
   script:
-    - npm test
-    - npm run
-    # - docker build -t morgangalvin/devopsdemo .
-    # - docker run -p 49160:5000  morgangalvin/devopsdemo
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+
+testing_testing:
+  stage: test
+  script: npm test
