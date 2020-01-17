@@ -5,7 +5,8 @@ WORKDIR /usr/src/app
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
 
-COPY package.json /usr/src/app/
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
 
 COPY . /usr/src/app
