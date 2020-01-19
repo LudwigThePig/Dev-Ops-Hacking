@@ -1,13 +1,14 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import colors, { lightColors } from './colors';
 
 export default _ => true;
 
 const loadingManager = new THREE.LoadingManager();
 loadingManager.onLoad = () => { draw(); };
 
-const height = window.innerHeight - 20;
-const width = window.innerWidth - 20;
+let height = window.innerHeight - 20;
+let width = window.innerWidth - 20;
 
 /* ********
 * Renderer *
@@ -32,16 +33,16 @@ scene.background = new THREE.Color(0x000000);
 * Camera *
 ******** */
 const camera = new THREE.PerspectiveCamera(50, width / height, 1, 1000);
-camera.position.set(0, 1, -5);
+camera.position.set(0, 1, -2);
 camera.lookAt(scene.position);
 
 
 /* *******
 * Lights *
 ******** */
-const ambientLight = new THREE.AmbientLight(0xFEFEFE, 0.7); // soft white light
+const ambientLight = new THREE.AmbientLight(lightColors.softWhite, 1); // soft white light
 scene.add(ambientLight);
-const topLight = new THREE.PointLight(0XFEFEFE, 1.8, 100);
+const topLight = new THREE.PointLight(lightColors.softWhite, 5.8, 100);
 topLight.position.set(0, 20, 22);
 topLight.castShadow = true;
 topLight.shadowDarkness = 2;
@@ -57,15 +58,11 @@ let mittenRock;
 const loader = new GLTFLoader(loadingManager);
 const mittenRockLoaderCallback = gltb => {
   mittenRock = gltb.scene;
+  const mittenMaterial = new THREE.MeshPhongMaterial({ color: colors.lightBrown });
+  // mittenRock = new THREE.Mesh(mittenRock.matrix, mittenMaterial)
+  mittenRock.children.forEach(child => child.material = mittenMaterial)
   scene.add(mittenRock);
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshPhongMaterial({ color: 0xF13F98 });
-  const   matrix = new THREE.Mesh(geometry, material);
-  matrix.position.set(0, 0.5, 0);
-  matrix.castShadow = true;
-  matrix.name = 'Cube';
-  matrix.receiveShadow = true;
-  scene.add(matrix)
+  console.log(mittenRock)
 };
 
 
@@ -82,8 +79,8 @@ loader.load( // pig
 const draw = () => {
   
   // rotate some shiz
-  mittenRock.rotation.x += 0.1;
-  mittenRock.rotation.z += 0.1;
+  mittenRock.rotation.y += 0.02;
+  mittenRock.rotation.z += 0.02;
 
   renderer.render(scene, camera);
   requestAnimationFrame(draw);
@@ -91,11 +88,8 @@ const draw = () => {
 };
 
 const onWindowResize = () => {
-  const newDimensions = getCanvasDimensions();
-  height = newDimensions.height;
-  width = newDimensions.width;
-
-
+  height = window.innerHeight - 20;
+  width = window.innerWidth - 20;
 
   renderer.setSize(width, height);
   camera.aspect = width / height;

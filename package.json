@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.config.js -p -w",
+    "build": "webpack --config webpack.config.js -d -w",
     "server": "node -r esm ./bin/www",
     "start": "npm-run-all --parallel build server",
     "test": "jest"
