@@ -33,8 +33,8 @@ scene.background = new THREE.Color(0x000000);
 * Camera *
 ******** */
 const camera = new THREE.PerspectiveCamera(50, width / height, 1, 1000);
-camera.position.set(0, 1, -2);
-camera.lookAt(scene.position);
+camera.position.set(0, 0, -2);
+camera.lookAt(0, 0, 0);
 
 
 /* *******
@@ -42,28 +42,44 @@ camera.lookAt(scene.position);
 ******** */
 const ambientLight = new THREE.AmbientLight(lightColors.softWhite, 1); // soft white light
 scene.add(ambientLight);
-const topLight = new THREE.PointLight(lightColors.softWhite, 5.8, 100);
-topLight.position.set(0, 20, 22);
-topLight.castShadow = true;
-topLight.shadowDarkness = 2;
+const pointLight = new THREE.PointLight(lightColors.softWhite, 2, 100);
+pointLight.position.set(0, -1, -3);
+pointLight.castShadow = true;
+pointLight.shadowDarkness = 2;
 
-topLight.shadowCameraVisible = true; // for debugging
-scene.add(topLight);
+pointLight.shadowCameraVisible = true;
+scene.add(pointLight);
+
 
 
 /* ************
 * Mitten Rock *
 ************* */
-let mittenRock;
+export let mittenRock; // export for testing
+
 const loader = new GLTFLoader(loadingManager);
 const mittenRockLoaderCallback = gltb => {
   mittenRock = gltb.scene;
-  const mittenMaterial = new THREE.MeshPhongMaterial({ color: colors.lightBrown });
-  // mittenRock = new THREE.Mesh(mittenRock.matrix, mittenMaterial)
+
+  const mittenMaterial = new THREE.MeshPhongMaterial({ color: colors.darkBrown });
+  mittenMaterial.flatShading = true;
+  mittenMaterial.shininess = 1000;
+
+
   mittenRock.children.forEach(child => child.material = mittenMaterial)
+  mittenRock.castShadow = true;
   scene.add(mittenRock);
   console.log(mittenRock)
 };
+
+
+const wallGeometry = new THREE.PlaneGeometry(5, 5, 5, 1);
+const wallMaterial = new THREE.MeshPhongMaterial({ color: colors.black, side: THREE.DoubleSide });
+const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+wall.position.y = 0;
+wall.position.z = 2;
+wall.receiveShadow = true;
+scene.add(wall);
 
 
 loader.load( // pig
@@ -79,8 +95,8 @@ loader.load( // pig
 const draw = () => {
   
   // rotate some shiz
-  mittenRock.rotation.y += 0.02;
-  mittenRock.rotation.z += 0.02;
+  mittenRock.rotation.y += 0.005;
+  mittenRock.rotation.z += 0.007;
 
   renderer.render(scene, camera);
   requestAnimationFrame(draw);
