@@ -3,3 +3,8 @@ body {
   font-family: 'Roboto', sans-serif;
   color: aquamarine;
 }
+
+h1 {
+  position: absolute;
+  left: 20px;
+}
