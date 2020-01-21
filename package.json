@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "webpack --config webpack.config.js -d -w",
+    "prod:build": "webpack --config webpack.config.js -p",
+    "prod:start": "NODE_ENV=production node -r esm ./bin/www",
     "server": "node -r esm ./bin/www",
     "start": "npm-run-all --parallel build server",
     "test": "NODE_ENV=test jest --testTimeout=10000 --detectOpenHandles"
