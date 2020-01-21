@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import colors, { lightColors } from './colors';
+import { mittenRockMaterial, lights, rotation } from './settings';
 
 export default _ => true;
 
@@ -40,9 +41,9 @@ camera.lookAt(0, 0, 0);
 /* *******
 * Lights *
 ******** */
-const ambientLight = new THREE.AmbientLight(lightColors.softWhite, 1); // soft white light
+const ambientLight = new THREE.AmbientLight(...lights.ambient); // soft white light
 scene.add(ambientLight);
-const pointLight = new THREE.PointLight(lightColors.softWhite, 2, 100);
+const pointLight = new THREE.PointLight(...lights.point);
 pointLight.position.set(0, -1, -3);
 pointLight.castShadow = true;
 pointLight.shadowDarkness = 2;
@@ -61,9 +62,9 @@ const loader = new GLTFLoader(loadingManager);
 const mittenRockLoaderCallback = gltb => {
   mittenRock = gltb.scene;
 
-  const mittenMaterial = new THREE.MeshPhongMaterial({ color: colors.darkBrown });
-  mittenMaterial.flatShading = true;
-  mittenMaterial.shininess = 1000;
+  const mittenMaterial = new THREE.MeshPhongMaterial(mittenRockMaterial);
+  // mittenMaterial.flatShading = true;
+  // mittenMaterial.shininess = 1000;
 
 
   mittenRock.children.forEach(child => child.material = mittenMaterial)
@@ -95,8 +96,9 @@ loader.load( // pig
 const draw = () => {
   
   // rotate some shiz
-  mittenRock.rotation.y += 0.005;
-  mittenRock.rotation.z += 0.007;
+  mittenRock.rotation.x += rotation.x;
+  mittenRock.rotation.y += rotation.y;
+  mittenRock.rotation.z += rotation.z;
 
   renderer.render(scene, camera);
   requestAnimationFrame(draw);

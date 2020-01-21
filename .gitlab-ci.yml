@@ -1,21 +1,43 @@
-image: node:latest
+image: node:12.8.0
+
+# And to cache them as well.
+cache:
+  paths:
+    - node_modules/
+    - .yarn
+
+before_script:
+  - apt-get update -qq && apt-get install
 
 stages:
   - build
   - test
+  - staging
 
 cache:
   paths:
     - node_modules/
 
-install_dependencies:
+Build_The_App:
   stage: build
+  only:
+    - merge_requests
   script:
     - npm install
   artifacts:
     paths:
       - node_modules/
 
-testing_testing:
+Test:
+  only:
+    - merge_requests
   stage: test
   script: npm test
+
+Stage:
+  only:
+    - merge_requests  
+  script:
+    - bash ./.gitlab/deploy-staging.sh
+  environment:     
+    name: staging     
