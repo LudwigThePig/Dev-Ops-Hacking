@@ -19,6 +19,8 @@ cache:
     - node_modules/
 
 Build_The_App:
+  tags: 
+    - demo
   stage: build
   only:
     - merge_requests
@@ -29,6 +31,8 @@ Build_The_App:
       - node_modules/
 
 Test:
+  tags: 
+    - demo
   only:
     - merge_requests
   stage: test
@@ -36,6 +40,8 @@ Test:
 
 Deploy to Staging:
   stage: staging
+  tags: 
+    - demo
   before_script:
     - mkdir -p ~/.ssh
     - echo -e “$SSH_PRIVATE_KEY” > ~/.ssh/id_rsa
