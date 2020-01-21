@@ -34,10 +34,20 @@ Test:
   stage: test
   script: npm test
 
-Stage:
-  only:
-    - merge_requests  
+Deploy to Staging:
+  stage: staging
+  before_script:
+    # Generates to connect to the AWS unit the SSH key.
+    - mkdir -p ~/.ssh
+    - echo -e “$SSH_PRIVATE_KEY” > ~/.ssh/id_rsa
+    # Sets the permission to 600 to prevent a problem with AWS
+    # that it’s too unprotected.
+    - chmod 600 ~/.ssh/id_rsa
+    - ‘[[ -f /.dockerenv ]] && echo -e “Host *\n\tStrictHostKeyChecking no\n\n” > ~/.ssh/config’
   script:
     - bash ./.gitlab/deploy-staging.sh
-  environment:     
-    name: staging     
+  environment:
+    name: staging
+    # Exposes a button that when clicked take you to the defined URL:
+      url: ec2-54-193-57-240.us-west-1.compute.amazonaws.com:3000
+
