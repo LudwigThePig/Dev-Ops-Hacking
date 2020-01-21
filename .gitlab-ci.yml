@@ -52,4 +52,3 @@ Deploy to Staging:
   environment:
     name: staging
     url: ec2-54-193-57-240.us-west-1.compute.amazonaws.com:3000
-
