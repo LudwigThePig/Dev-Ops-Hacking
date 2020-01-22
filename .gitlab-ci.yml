@@ -19,6 +19,7 @@ cache:
     - node_modules/
 
 Build_The_App:
+
   stage: build
   only:
     - merge_requests
@@ -34,10 +35,15 @@ Test:
   stage: test
   script: npm test
 
-Stage:
-  only:
-    - merge_requests  
+Deploy to Staging:
+  stage: staging
+  tags: 
+    - demo
+  before_script:
+    - mkdir -p ~/.ssh
+    - 'echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - bash ./.gitlab/deploy-staging.sh
-  environment:     
-    name: staging     
+  environment:
+    name: staging
+    url: ec2-54-193-57-240.us-west-1.compute.amazonaws.com:3000
