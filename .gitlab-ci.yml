@@ -19,8 +19,7 @@ cache:
     - node_modules/
 
 Build_The_App:
-  tags: 
-    - demo
+
   stage: build
   only:
     - merge_requests
@@ -31,8 +30,6 @@ Build_The_App:
       - node_modules/
 
 Test:
-  tags: 
-    - demo
   only:
     - merge_requests
   stage: test
