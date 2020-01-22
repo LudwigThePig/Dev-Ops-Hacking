@@ -8,6 +8,13 @@ if [ -z "$PRIVATE_TOKEN" ]; then
 fi
 # Extract the host where the server is running, and add the URL to the APIs
 [[ $CI_PROJECT_URL =~ ^https?://[^/]+ ]] && HOST="${BASH_REMATCH[0]}/api/v4/projects/"
+
+echo HOST
+echo ${HOST}
+echo CI_PROJECT_ID
+echo ${CI_PROJECT_ID}
+echo PRIVATE_TOKEN
+echo ${PRIVATE_TOKEN}
 # Look which is the default branch
 TARGET_BRANCH=`curl — silent "${HOST}${CI_PROJECT_ID}" — header "PRIVATE-TOKEN:${PRIVATE_TOKEN}" | jq — raw-output '.default_branch'`;
 # The description of our new MR, we want to remove the branch after the MR has
