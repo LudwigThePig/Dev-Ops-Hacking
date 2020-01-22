@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js -d -w",
     "prod:build": "webpack --config webpack.config.js -p",
-    "prod:server": "pm2 start ecosystem.config.js",
+    "prod:server": "pm2 start ecosystem.config.js --node-args=\"-r esm\"",
     "prod:start": "NODE_ENV=production npm run prod:build && npm run prod:server",
     "server": "node -r esm ./bin/www",
     "start": "npm-run-all --parallel build server",
