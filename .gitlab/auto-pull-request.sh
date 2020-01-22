@@ -29,6 +29,7 @@ BODY="{
     \"target_branch\": \"${TARGET_BRANCH}\",
     \"remove_source_branch\": true,
     \"title\": \"WIP: ${CI_COMMIT_REF_NAME}\",
+    \"description\": \"[Staging Server](${STAGING_SERVER})\",
     \"assignee_id\":\"${GITLAB_USER_ID}\"
 }";
 
