@@ -30,7 +30,7 @@
     "regenerator-runtime": "^0.13.3",
     "supertest": "^3.0.0",
     "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.12"
   },
   "jest": {
     "verbose": true,
